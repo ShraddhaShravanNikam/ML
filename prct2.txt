@@ -1,0 +1,45 @@
+
+use map_example
+db.createCollection('Mapr')
+
+db.Mapr.insertMany(
+  [
+ { id: 1, product: "Apple", quantity: 5 }, 
+{ id: 2, product: "Banana", quantity: 3 }, 
+{ id: 3, product: "Apple", quantity: 8 }, 
+{ id: 4, product: "Banana", quantity: 2 }, 
+{ id: 5, product: "Orange", quantity: 7 } 
+])
+
+db.Mapr.aggregate (
+  [
+    {
+      $group : {_id :"$product" ,total:{$sum:"$quantity"}}}
+    
+    ])
+    
+    
+db.Mapr.aggregate ([
+  {
+    $group:{_id : "$product",total:{$sum :"$id"}}
+  }
+  ])
+  
+  var mapFunction= function() {
+    emit(this.product,this.quantity);
+    };
+  var reduceFunction=function(key,value) {
+    return Array.sum(value);
+  };
+  
+ db.Mapr.mapReduce
+ (
+    mapFunction,
+    reduceFunction,
+    {
+      out:"Total"
+    }
+  );
+  db.Total.find().pretty()
+  
+  

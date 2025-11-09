@@ -1,0 +1,23 @@
+
+var mapFunction = function(){
+  emit(this.product,this.quantity)
+}
+var reduceFunction =function(key,values){
+  return Array.sum(values)
+}
+
+db.Mapr.mapReduce(
+  mapFunction,
+  reduceFunction,
+  {
+    out:"Total"
+  }
+  );
+  db.Total.find().pretty()
+  
+  db.std.createIndex({product :1})
+  db.std.createIndex({product :1},{quantity:1})
+  db.std.getIndexes()
+  db.std.dropIndex('product_1')
+  db.std.dropIndexes()
+  db.std.getindexes()

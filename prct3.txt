@@ -1,0 +1,35 @@
+use md
+  db.createCollection("std")
+  
+  db.std.insertMany(
+  [
+ { id: 1, product: "Apple", quantity: 5 }, 
+{ id: 2, product: "Banana", quantity: 3 }, 
+{ id: 3, product: "Apple", quantity: 8 }, 
+{ id: 4, product: "Banana", quantity: 2 }, 
+{ id: 5, product: "Orange", quantity: 7 } 
+])
+
+db.std.aggregate(
+  {
+    $group:
+    {_id:"$product","total":{$sum:"$quantity"}
+    }
+  })
+  
+  db.std.aggregate(
+    {
+      $group:
+      {
+        _id :"$product","Total":{$sum:"$id"}
+      }
+    })
+
+
+db.std.createIndex({product:1});
+db.std.createIndex({product:1,quantity:-1});
+db.std.getIndexes()
+db.std.dropIndex('product_1')
+db.std.dropIndexes()
+db.std.getIndexes()
+  

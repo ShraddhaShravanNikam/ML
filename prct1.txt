@@ -1,0 +1,78 @@
+
+db.employees.insertMany([
+  {empId: 1, name: 'Clark', dept: 'Sales' },
+  {empId: 2, name: 'Dave', dept: 'Accounting' },
+  {empId: 3, name: 'Ava', dept: 'Sales' }
+]);
+
+db.employees.insertOne(
+  {
+    empId: 4, name: 'Clark', dept: 'Sales'
+  })
+  
+  db.employees.replaceOne(
+    {
+      empId: 1
+    },
+    {
+      name: 'Clark', dept: 'Sales'
+    }
+    )
+    
+    db.employees.updateOne(
+      {
+         empId: 1
+      },
+      { 
+        $set:{name:'Ram'}
+      }
+      )
+
+db.employees.updateOne(
+  { emp_Id : 8
+    
+  },
+  {
+    $set:{name:'Raj'}
+    
+  },
+{
+  upsert :true
+  
+}
+)
+
+db.employees.updateMany(
+  {emp_Id : 1},
+  {
+    $set:{name:'Raj'}
+  }
+  )
+  
+  
+  db.employees.updateMany(
+  {emp_Id : 1},
+  {
+    $set:{name:'Raj'}
+  },
+  {
+    returnNewDocument:true
+  }
+  )
+  
+db.employees.find()
+db.employees.find({name:'Raj'})
+db.employees.find({emp_Id : {$gt:1}})
+db.employees.find({$or :[{emp_Id:1},{name:'Raj'}]})
+db.employees.find({emp_Id :{ $not:{$gt:2 } } } )
+
+db.employees.find({name :null})
+db.employees.find({name : {$regex :/^S/}})
+db.employees.find({name:'Raj'})
+
+db.employees.find({$where :"this.emp_Id >1 && this.name=='Raj'"})
+
+db.employees.find().limit(2)
+db.employees.find().skip(1)
+db.employees.find().sort({emp_Id:-1})
+
